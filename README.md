@@ -39,7 +39,7 @@ This will spin up the development server at `localhost:3000` and allow you to se
 For the frontend, I decided to go with Chakra UI, a component library that emphasizes simplicity, modularity, and accessibility. Think Tailwind CSS but with built out components that are fully customizeable. These prebuilt components provide great building blocks for your application. You can use them straight out of the box or build your own using said building blocks for even further extensibility. The documentation is great and seemed like a no brainer. I used the latest version of React with the latest features, such as Hooks. I used the following third-party libraries on top of Chakra UI:
 
 
-- [reach/router] (https://reach.tech/router/)
+- [@reach/router](https://reach.tech/router/)
   - a small, simple router for React that borrows from React Router, Ember, and Preact Router. Used for navigation in React SPA's.
 - [axios](https://axios-http.com/docs/intro)
   - a promise-based HTTP Client for node.js and the browser. Used in lieu of the native fetch api found in the browser.
