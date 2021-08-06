@@ -64,7 +64,7 @@ const Directory = ({ pageNumber }) => {
   };
 
   return (
-    <Flex direction="column" justifyContent="center" alignItems="center">
+    <Flex direction="column" justifyContent="space-evenly" alignItems="center">
       <SearchInput
         loading={loading}
         setLoading={setLoading}

@@ -1,26 +1,44 @@
-import React, { useState } from 'react';
-import { Tabs, TabList, Tab } from '@chakra-ui/react';
+import React from 'react';
+import { Button, ButtonGroup } from '@chakra-ui/react';
 import { navigate } from '@reach/router';
 
 const PaginationBar = ({ currentPage, lastPage }) => {
-  const displayPageTabs = () => {
-    const tabData = [];
+  const displayPageButtons = () => {
+    const pageNumbers = [];
     for (let i = 1; i <= lastPage; i++) {
-      tabData.push(i);
+      pageNumbers.push(i);
     }
-    return tabData.map(page => {
+    return pageNumbers.map(page => {
       return (
-        <Tab onClick={() => navigate(`/directory/${page}`)} key={page}>
+        <Button
+          onClick={() => navigate(`/directory/${page}`)}
+          colorScheme={currentPage === page ? 'orange' : null}
+          key={page}
+        >
           {page}
-        </Tab>
+        </Button>
       );
     });
   };
 
   return (
-    <Tabs variant="soft-rounded" colorScheme="orange">
-      <TabList>{displayPageTabs()}</TabList>
-    </Tabs>
+    <ButtonGroup>
+      <Button
+        colorScheme="pink"
+        onClick={() => navigate(`/directory/${currentPage - 1}`)}
+        isDisabled={currentPage === 1}
+      >
+        Previous
+      </Button>
+      {displayPageButtons()}
+      <Button
+        colorScheme="cyan"
+        onClick={() => navigate(`/directory/${currentPage + 1}`)}
+        isDisabled={currentPage === lastPage}
+      >
+        Next
+      </Button>
+    </ButtonGroup>
   );
 };
 
