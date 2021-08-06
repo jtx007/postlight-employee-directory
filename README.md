@@ -56,7 +56,7 @@ Made with the  [Create React App template](https://chakra-ui.com/guides/integrat
 - For this app, I have a Chakra Provider that wraps my entire application, with a theme prop, which is extending the default theme from Chakra UI with some custom styles of my own. I then have a [Layout](src/components/Layout.js) component which encompasses the [Navbar](src/components/Navbar.js) wrapping the application.
 - Then I have the Router provider from reach/router wrapping the page components for the application with dynamic routes for the directory and it's pagination as well as dynamic routing for editing employees.
 - To view all employees, one would navigate to the directory page where on mount, employees would be fetched from my Rails API. The results will be stored via local state and rendered into [EmployeeCard](src/components/EmployeeCard.js) presentational components. The employee card has two buttons to edit current employees as well as delete them with a [modal](src/components/DeleteModal.js).
-- There is there is the [AddEmployeePage](src/components/AddEmployee.js) with a form to add new employees.
+- There is there is the [AddEmployeePage](src/pages/AddEmployee.js) with a form to add new employees.
 
 ## Stretch Features
 
