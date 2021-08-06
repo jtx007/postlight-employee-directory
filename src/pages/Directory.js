@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { SimpleGrid, Box, Text, HStack, Flex } from '@chakra-ui/layout';
-import { Avatar, Button, ButtonGroup, Spinner } from '@chakra-ui/react';
-import { Link } from '@reach/router';
-import SearchInput from '../components/SearchInput';
-import DeleteModal from '../components/DeleteModal';
+import { SimpleGrid, Flex } from '@chakra-ui/layout';
+import { Spinner } from '@chakra-ui/react';
 import { employeeApi } from '../api';
+import SearchInput from '../components/SearchInput';
 import PaginationBar from '../components/PaginationBar';
+import EmployeeCard from '../components/EmployeeCard';
 
 const Directory = ({ pageNumber }) => {
   const [employees, setEmployees] = useState([]);
@@ -36,59 +35,50 @@ const Directory = ({ pageNumber }) => {
   const displayEmployeeCards = () => {
     return employees.map(employee => {
       return (
-        <Box borderRadius="10px" padding="2" bg="buttonText" key={employee.id}>
-          <HStack spacing="10">
-            <Avatar size="xl" name={employee.name} src={employee.avatar} />
-            <Box>
-              <Text>{employee.name}</Text>
-              <Text>{employee.department.name}</Text>
-              <Text>{employee.title.jobtitle}</Text>
-              <Text>{employee.email}</Text>
-              <Text>{employee.location.state}</Text>
-            </Box>
-          </HStack>
-          <ButtonGroup mt="5" variant="outline">
-            <Button as={Link} to={`/editEmployee/${employee.id}`} bg="primary">
-              Edit
-            </Button>
-            <DeleteModal
-              employeeId={employee.id}
-              employeeName={employee.name}
-              employees={employees}
-              setEmployees={setEmployees}
-            />
-          </ButtonGroup>
-        </Box>
+        <EmployeeCard
+          key={employee.id}
+          employee={employee}
+          employees={employees}
+          setEmployees={setEmployees}
+        />
       );
     });
   };
 
   return (
-    <Flex direction="column" justifyContent="space-evenly" alignItems="center">
+    <Flex
+      p="5"
+      direction="column"
+      justifyContent="space-evenly"
+      alignItems="center"
+    >
       <SearchInput
         loading={loading}
         setLoading={setLoading}
         employees={employees}
         setEmployees={setEmployees}
       />
-      {loading && (
+      {loading ? (
         <Spinner
           mt="20"
+          mb="20"
           thickness="4px"
           speed="0.65s"
           emptyColor="primary"
           color="tertiary"
           size="xl"
         />
+      ) : (
+        <SimpleGrid
+          justifyContent="center"
+          mt="24"
+          mb="10"
+          columns={[2, null, 3]}
+          spacing="40px"
+        >
+          {displayEmployeeCards()}
+        </SimpleGrid>
       )}
-      <SimpleGrid
-        justifyContent="center"
-        mt="24"
-        columns={[2, null, 3]}
-        spacing="40px"
-      >
-        {displayEmployeeCards()}
-      </SimpleGrid>
       <PaginationBar currentPage={currentPage} lastPage={lastPage} />
     </Flex>
   );

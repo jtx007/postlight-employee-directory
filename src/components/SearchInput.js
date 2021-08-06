@@ -31,7 +31,7 @@ const SearchInput = ({ setEmployees, setLoading, loading }) => {
 
   return (
     <>
-      <InputGroup mt="10" w="30vw">
+      <InputGroup mt="5" w="30vw">
         <Input
           onBlur={e => setSearchParams(e.target.value)}
           onChange={e => setSearchParams(e.target.value)}
