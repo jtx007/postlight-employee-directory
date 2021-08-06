@@ -12,7 +12,8 @@ const PaginationBar = ({ currentPage, lastPage }) => {
       return (
         <Button
           onClick={() => navigate(`/directory/${page}`)}
-          colorScheme={currentPage === page ? 'orange' : null}
+          colorScheme={currentPage === page ? 'orange' : 'pink'}
+          variant={currentPage === page ? 'solid' : 'outline'}
           key={page}
         >
           {page}
@@ -25,6 +26,7 @@ const PaginationBar = ({ currentPage, lastPage }) => {
     <ButtonGroup>
       <Button
         colorScheme="pink"
+        variant={currentPage === 1 ? 'outline' : 'solid'}
         onClick={() => navigate(`/directory/${currentPage - 1}`)}
         isDisabled={currentPage === 1}
       >
@@ -33,6 +35,7 @@ const PaginationBar = ({ currentPage, lastPage }) => {
       {displayPageButtons()}
       <Button
         colorScheme="cyan"
+        variant={currentPage === lastPage ? 'outline' : 'solid'}
         onClick={() => navigate(`/directory/${currentPage + 1}`)}
         isDisabled={currentPage === lastPage}
       >
