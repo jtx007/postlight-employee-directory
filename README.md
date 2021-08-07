@@ -1,8 +1,13 @@
 # Postlight Employee Directory (Frontend)
 
-This is my submission for the Postlight take home assignment for the Full Stack Engineer Position. In order to run this project in it's entirety, please clone and setup the backend repo which can be found *[here](https://github.com/jtx007/postlight-employee-directory-api)*
+This is my submission for the Postlight take home assignment for the Full Stack Engineer Position. In order to run this project in it's entirety, please clone and setup the backend repo and the server is running which can be found *[here](https://github.com/jtx007/postlight-employee-directory-api)*
 
-## Prerequisties
+
+
+## Prerequisties 
+
+- Make sure that the backend api server is running which can be found *[here](https://github.com/jtx007/postlight-employee-directory-api)*
+
 
 - **nvm**: use [nvm](https://github.com/nvm-sh/nvm) and run `nvm install` and nvm will read the .npmrc file to install the compatible node version for this project - Node version 14.17.0
 
@@ -32,7 +37,7 @@ For tests run:
 $ npm run test
 ```
 
-This will spin up the development server at `localhost:3000` and allow you to see the app live!
+This will spin up the development server at the port it mentions after spinning up the [backend]((https://github.com/jtx007/postlight-employee-directory-api)) API and allow you to see the app live!
 
 ## Technical Design
 
