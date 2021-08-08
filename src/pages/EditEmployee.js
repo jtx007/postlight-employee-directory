@@ -4,8 +4,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-  FormErrorMessage,
-  FormHelperText,
   Button,
   chakra,
   Select,
@@ -32,26 +30,27 @@ const EditEmployee = ({ employeeid }) => {
 
   useEffect(() => {
     const getEmployeeAndFormOptions = async () => {
-      let employee = employeeApi.get(`/employees/${employeeid}`);
-      let locations = employeeApi.get('/locations');
-      let titles = employeeApi.get('/titles');
-      let departments = employeeApi.get('/departments');
+      let fetchEmployee = employeeApi.get(`/employees/${employeeid}`);
+      let fetchLocations = employeeApi.get('/locations');
+      let fetchTitles = employeeApi.get('/titles');
+      let fetchDepartments = employeeApi.get('/departments');
       try {
         setLoading(true);
         const response = await Promise.all([
-          locations,
-          titles,
-          departments,
-          employee,
+          fetchLocations,
+          fetchTitles,
+          fetchDepartments,
+          fetchEmployee,
         ]);
-        setAvailableLocations(response[0].data);
-        setAvailableTitles(response[1].data);
-        setAvailableDepartments(response[2].data);
-        setFullName(response[3].data.name);
-        setEmail(response[3].data.email);
-        setSelectLocation(response[3].data.location.id);
-        setSelectTitle(response[3].data.title.id);
-        setSelectDepartment(response[3].data.department.id);
+        const [locations, titles, departments, employee] = response;
+        setAvailableLocations(locations.data);
+        setAvailableTitles(titles.data);
+        setAvailableDepartments(departments.data);
+        setFullName(employee.data.name);
+        setEmail(employee.data.email);
+        setSelectLocation(employee.data.location.id);
+        setSelectTitle(employee.data.title.id);
+        setSelectDepartment(employee.data.department.id);
       } catch (e) {
         setError(e);
       }
@@ -90,7 +89,7 @@ const EditEmployee = ({ employeeid }) => {
     });
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
     try {
       setLoading(true);
@@ -103,7 +102,7 @@ const EditEmployee = ({ employeeid }) => {
           location_id: selectLocation,
         },
       });
-      navigate('/directory/1');
+      await navigate('/directory/1', { replace: true });
     } catch (e) {
       setError(e);
       toast({

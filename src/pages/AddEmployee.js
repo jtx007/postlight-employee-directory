@@ -4,8 +4,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-  FormErrorMessage,
-  FormHelperText,
   Button,
   chakra,
   Select,
@@ -77,7 +75,7 @@ const AddEmployee = () => {
     });
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
     try {
       setLoading(true);
@@ -90,7 +88,7 @@ const AddEmployee = () => {
           location_id: selectLocation,
         },
       });
-      navigate('/directory/1');
+      await navigate('/directory/1', { replace: true });
     } catch (e) {
       setError(e);
       toast({

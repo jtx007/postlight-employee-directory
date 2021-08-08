@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { SimpleGrid, Flex } from '@chakra-ui/layout';
-import { Spinner } from '@chakra-ui/react';
+import { Heading, ScaleFade, Spinner, useToast } from '@chakra-ui/react';
 import { employeeApi } from '../api';
 import SearchInput from '../components/SearchInput';
 import PaginationBar from '../components/PaginationBar';
@@ -12,6 +12,8 @@ const Directory = ({ pageNumber }) => {
   const [error, setError] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [lastPage, setLastPage] = useState('');
+
+  const toast = useToast();
 
   useEffect(() => {
     const employeeApiWrapper = async () => {
@@ -26,11 +28,17 @@ const Directory = ({ pageNumber }) => {
         setLastPage(data[0].pagy.last);
       } catch (e) {
         setError(e);
+        toast({
+          title: e.error,
+          status: 'error',
+          position: 'top',
+          isClosable: 'true',
+        });
       }
       setLoading(false);
     };
     employeeApiWrapper();
-  }, [pageNumber]);
+  }, [pageNumber, toast]);
 
   const displayEmployeeCards = () => {
     return employees.map(employee => {
@@ -68,16 +76,31 @@ const Directory = ({ pageNumber }) => {
           color="tertiary"
           size="xl"
         />
+      ) : employees.length > 0 ? (
+        <ScaleFade initialScale={0.9} unmountOnExit={true} in={employees}>
+          <SimpleGrid
+            justifyContent="center"
+            mt="24"
+            mb="10"
+            columns={[2, null, 3]}
+            spacing="40px"
+          >
+            {displayEmployeeCards()}
+          </SimpleGrid>
+        </ScaleFade>
       ) : (
-        <SimpleGrid
+        <Heading
+          display="flex"
           justifyContent="center"
-          mt="24"
-          mb="10"
-          columns={[2, null, 3]}
-          spacing="40px"
+          alignItems="center"
+          margin="auto"
+          padding="20"
+          textAlign="center"
+          color="secondary"
         >
-          {displayEmployeeCards()}
-        </SimpleGrid>
+          No Employees found,
+          <br /> please select a different page
+        </Heading>
       )}
       <PaginationBar currentPage={currentPage} lastPage={lastPage} />
     </Flex>

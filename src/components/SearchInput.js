@@ -19,12 +19,19 @@ const SearchInput = ({ setEmployees, setLoading, loading }) => {
 
     try {
       setLoading(true);
-      const response = await employeeApi.get(
-        `/employees/?filter=${searchParams}`
-      );
+      const response = await employeeApi.get(`/search/`, {
+        params: { query: searchParams },
+      });
+      setSearchParams('');
       setEmployees(response.data);
     } catch (e) {
       setError(e);
+      toast({
+        title: 'Search Failed',
+        status: 'error',
+        position: 'top',
+        isClosable: 'true',
+      });
     }
     setLoading(false);
   };

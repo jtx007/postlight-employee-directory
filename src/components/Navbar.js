@@ -1,55 +1,67 @@
 import React from 'react';
-import { chakra } from '@chakra-ui/system';
 import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  Heading,
+  Menu,
+  MenuButton,
+  MenuList,
+  Button,
+  IconButton,
+  Link,
 } from '@chakra-ui/react';
-import { Link } from '@reach/router';
+import { HamburgerIcon } from '@chakra-ui/icons';
+
+import { Link as ReachLink } from '@reach/router';
 
 const Navbar = () => {
   return (
-    <chakra.nav
-      display="flex"
-      justifyContent="space-between"
-      alignItems="center"
-      bg="background"
-      height="5vh"
-      border="1px"
-      borderColor="transparent"
-      borderBottomColor="secondary"
-    >
-      <Heading paddingLeft="10" color="headline">
-        Employee Directory
-      </Heading>
-      <Breadcrumb
-        color="primary"
+    <Menu closeOnSelect={true}>
+      <MenuButton
+        color="tertiary"
+        as={IconButton}
+        aria-label="Options"
+        icon={<HamburgerIcon />}
+        variant="outline"
+        padding="2"
+      />
+      <MenuList
+        bg="transparent"
+        borderColor="InactiveBorder"
+        padding="0"
+        margin="0"
         display="flex"
-        justifyContent="flex-end"
-        alignItems="center"
-        paddingRight="10"
-        fontSize="2xl"
-        fontWeight="bold"
-        separator=">"
+        flexDirection="column"
       >
-        <BreadcrumbItem>
-          <BreadcrumbLink as={Link} to="/">
-            Home
-          </BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbItem>
-          <BreadcrumbLink as={Link} to="/directory/1">
-            Directory
-          </BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbItem>
-          <BreadcrumbLink as={Link} to="/addEmployee">
-            Add
-          </BreadcrumbLink>
-        </BreadcrumbItem>
-      </Breadcrumb>
-    </chakra.nav>
+        <Link
+          fontWeight="bold"
+          padding="2"
+          margin="0"
+          width="min-content"
+          to="/"
+          as={ReachLink}
+        >
+          <Button colorScheme="teal">Home</Button>
+        </Link>
+        <Link
+          fontWeight="bold"
+          padding="2"
+          border="3px"
+          borderColor="red"
+          to="/directory/1"
+          as={ReachLink}
+        >
+          <Button colorScheme="purple">Directory</Button>
+        </Link>
+        <Link
+          fontWeight="bold"
+          padding="2"
+          margin="0"
+          width="min-content"
+          to="/addEmployee"
+          as={ReachLink}
+        >
+          <Button colorScheme="pink">Add</Button>
+        </Link>
+      </MenuList>
+    </Menu>
   );
 };
 
