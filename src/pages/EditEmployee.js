@@ -13,6 +13,11 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { employeeApi } from '../api';
+import {
+  displayAvailableDepartmentsOptions,
+  displayAvailableLocationsOptions,
+  displayAvailableTitlesOptions,
+} from '../utils/index';
 
 const EditEmployee = ({ employeeid }) => {
   const toast = useToast();
@@ -58,36 +63,6 @@ const EditEmployee = ({ employeeid }) => {
     };
     getEmployeeAndFormOptions();
   }, [employeeid]);
-
-  const displayAvailableDepartments = () => {
-    return availableDepartments.map(department => {
-      return (
-        <option key={department.id} value={department.id}>
-          {department.name}
-        </option>
-      );
-    });
-  };
-
-  const displayAvailableLocations = () => {
-    return availableLocations.map(location => {
-      return (
-        <option key={location.id} value={location.id}>
-          {location.state}
-        </option>
-      );
-    });
-  };
-
-  const displayAvailableTitles = () => {
-    return availableTitles.map(title => {
-      return (
-        <option key={title.id} value={title.id}>
-          {title.jobtitle}
-        </option>
-      );
-    });
-  };
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -177,7 +152,7 @@ const EditEmployee = ({ employeeid }) => {
               isRequired
               placeholder="Select Department"
             >
-              {displayAvailableDepartments()}
+              {displayAvailableDepartmentsOptions(availableDepartments)}
             </Select>
           </FormControl>
           <FormControl>
@@ -190,7 +165,7 @@ const EditEmployee = ({ employeeid }) => {
               isRequired
               placeholder="Select Location"
             >
-              {displayAvailableLocations()}
+              {displayAvailableLocationsOptions(availableLocations)}
             </Select>
           </FormControl>
           <FormControl>
@@ -203,7 +178,7 @@ const EditEmployee = ({ employeeid }) => {
               isRequired
               placeholder="Select Job Title"
             >
-              {displayAvailableTitles()}
+              {displayAvailableTitlesOptions(availableTitles)}
             </Select>
           </FormControl>
           <FormControl>

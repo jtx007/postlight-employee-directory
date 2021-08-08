@@ -13,6 +13,11 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { employeeApi } from '../api';
+import {
+  displayAvailableLocationsOptions,
+  displayAvailableTitlesOptions,
+  displayAvailableDepartmentsOptions,
+} from '../utils/index';
 
 const AddEmployee = () => {
   const toast = useToast();
@@ -30,50 +35,26 @@ const AddEmployee = () => {
 
   useEffect(() => {
     const getLocationsTitlesAndDepartments = async () => {
-      let locations = employeeApi.get('/locations');
-      let titles = employeeApi.get('/titles');
-      let departments = employeeApi.get('/departments');
+      let fetchLocations = employeeApi.get('/locations');
+      let fetchTitles = employeeApi.get('/titles');
+      let fetchDepartments = employeeApi.get('/departments');
       try {
-        const response = await Promise.all([locations, titles, departments]);
-        setAvailableLocations(response[0].data);
-        setAvailableTitles(response[1].data);
-        setAvailableDepartments(response[2].data);
+        const response = await Promise.all([
+          fetchLocations,
+          fetchTitles,
+          fetchDepartments,
+        ]);
+        const [locations, titles, departments] = response;
+
+        setAvailableLocations(locations.data);
+        setAvailableTitles(titles.data);
+        setAvailableDepartments(departments.data);
       } catch (e) {
         setError(e);
       }
     };
     getLocationsTitlesAndDepartments();
   }, []);
-
-  const displayAvailableDepartments = () => {
-    return availableDepartments.map(department => {
-      return (
-        <option key={department.id} value={department.id}>
-          {department.name}
-        </option>
-      );
-    });
-  };
-
-  const displayAvailableLocations = () => {
-    return availableLocations.map(location => {
-      return (
-        <option key={location.id} value={location.id}>
-          {location.state}
-        </option>
-      );
-    });
-  };
-
-  const displayAvailableTitles = () => {
-    return availableTitles.map(title => {
-      return (
-        <option key={title.id} value={title.id}>
-          {title.jobtitle}
-        </option>
-      );
-    });
-  };
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -163,7 +144,7 @@ const AddEmployee = () => {
               isRequired
               placeholder="Select Department"
             >
-              {displayAvailableDepartments()}
+              {displayAvailableDepartmentsOptions(availableDepartments)}
             </Select>
           </FormControl>
           <FormControl>
@@ -176,7 +157,7 @@ const AddEmployee = () => {
               isRequired
               placeholder="Select Location"
             >
-              {displayAvailableLocations()}
+              {displayAvailableLocationsOptions(availableLocations)}
             </Select>
           </FormControl>
           <FormControl>
@@ -189,7 +170,7 @@ const AddEmployee = () => {
               isRequired
               placeholder="Select Job Title"
             >
-              {displayAvailableTitles()}
+              {displayAvailableTitlesOptions(availableTitles)}
             </Select>
           </FormControl>
           <FormControl>

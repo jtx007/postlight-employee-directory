@@ -5,6 +5,7 @@ import { employeeApi } from '../api';
 import SearchInput from '../components/SearchInput';
 import PaginationBar from '../components/PaginationBar';
 import EmployeeCard from '../components/EmployeeCard';
+import FiltersDrawer from '../components/FiltersDrawer';
 
 const Directory = ({ pageNumber }) => {
   const [employees, setEmployees] = useState([]);
@@ -78,6 +79,7 @@ const Directory = ({ pageNumber }) => {
         />
       ) : employees.length > 0 ? (
         <ScaleFade initialScale={0.9} unmountOnExit={true} in={employees}>
+          <FiltersDrawer />
           <SimpleGrid
             justifyContent="center"
             mt="24"
