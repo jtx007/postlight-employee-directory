@@ -106,7 +106,11 @@ const FilterDrawer = ({ setEmployees }) => {
           <DrawerHeader>Select Filter</DrawerHeader>
 
           <DrawerBody>
-            <RadioGroup onChange={setCurrentFilter} value={currentFilter}>
+            <RadioGroup
+              fontWeight="bold"
+              onChange={setCurrentFilter}
+              value={currentFilter}
+            >
               <Stack direction="column">
                 <Radio value="departments">Departments</Radio>
                 <Radio value="locations">Locations</Radio>
@@ -143,7 +147,7 @@ const FilterDrawer = ({ setEmployees }) => {
             <Button variant="outline" mr={3} onClick={onClose}>
               Cancel
             </Button>
-            <Button onClick={applyFilterAndSearch} colorScheme="blue">
+            <Button onClick={applyFilterAndSearch} colorScheme="orange">
               Apply
             </Button>
           </DrawerFooter>

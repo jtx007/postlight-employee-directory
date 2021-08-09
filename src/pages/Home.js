@@ -13,8 +13,8 @@ const Home = () => {
         <Text fontWeight="bold" fontSize="2xl">
           This is the employee directory. Here you can add, remove, and edit
           employees that work at the company. You can also look up employees by
-          department, location, job title, name, or email. Have fun and let me
-          know of any critiques or changes you might recommend.
+          department, location, job title, name, or email. You can also filter
+          by specfic departments, locations, or titles.
         </Text>
       </Container>
     </Flex>
