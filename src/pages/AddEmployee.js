@@ -60,7 +60,7 @@ const AddEmployee = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      employeeApi.post('/employees', {
+      await employeeApi.post('/employees', {
         employee: {
           name: fullName,
           email: email,

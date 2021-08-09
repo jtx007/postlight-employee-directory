@@ -79,7 +79,7 @@ const Directory = ({ pageNumber }) => {
         />
       ) : employees.length > 0 ? (
         <ScaleFade initialScale={0.9} unmountOnExit={true} in={employees}>
-          <FiltersDrawer />
+          <FiltersDrawer employees={employees} setEmployees={setEmployees} />
           <SimpleGrid
             justifyContent="center"
             mt="24"
@@ -101,7 +101,7 @@ const Directory = ({ pageNumber }) => {
           color="secondary"
         >
           No Employees found,
-          <br /> please select a different page
+          <br /> please select a different page or try searching again.
         </Heading>
       )}
       <PaginationBar currentPage={currentPage} lastPage={lastPage} />

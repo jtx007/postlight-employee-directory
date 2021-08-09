@@ -23,7 +23,8 @@ const SearchInput = ({ setEmployees, setLoading, loading }) => {
         params: { query: searchParams },
       });
       setSearchParams('');
-      setEmployees(response.data);
+      const data = await response.data;
+      setEmployees(data);
     } catch (e) {
       setError(e);
       toast({

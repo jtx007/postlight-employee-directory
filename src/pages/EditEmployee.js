@@ -68,7 +68,7 @@ const EditEmployee = ({ employeeid }) => {
     e.preventDefault();
     try {
       setLoading(true);
-      employeeApi.patch(`/employees/${employeeid}`, {
+      await employeeApi.patch(`/employees/${employeeid}`, {
         employee: {
           name: fullName,
           email: email,

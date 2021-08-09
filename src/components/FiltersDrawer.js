@@ -11,23 +11,29 @@ import {
   useDisclosure,
   Select,
   useToast,
+  Radio,
+  RadioGroup,
+  Stack,
 } from '@chakra-ui/react';
 import { employeeApi } from '../api';
 import {
-  displayAvailableDepartmentsOptions,
-  displayAvailableLocationsOptions,
-  displayAvailableTitlesOptions,
+  displayDepartmentsFilterOptions,
+  displayLocationsFilterOptions,
+  displayTitlesFilterOptions,
 } from '../utils';
 
-const FilterDrawer = () => {
+const FilterDrawer = ({ setEmployees }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [availableLocations, setAvailableLocations] = useState([]);
   const [availableTitles, setAvailableTitles] = useState([]);
   const [availableDepartments, setAvailableDepartments] = useState([]);
-  const btnRef = useRef();
+  const [filterValue, setFilterValue] = useState('');
 
+  const [currentFilter, setCurrentFilter] = useState('departments');
+
+  const btnRef = useRef();
   const toast = useToast();
 
   useEffect(() => {
@@ -59,6 +65,30 @@ const FilterDrawer = () => {
     getAvailableOptions();
   }, [toast]);
 
+  const applyFilterAndSearch = async e => {
+    e.preventDefault();
+    if (filterValue) {
+      try {
+        setLoading(true);
+        const response = await employeeApi.get(`/search/`, {
+          params: { query: filterValue },
+        });
+        const data = await response.data;
+        setEmployees(data);
+        onClose();
+      } catch (e) {
+        setError(e);
+        toast({
+          title: 'Error filtering results',
+          position: 'top',
+          isClosable: 'true',
+          status: 'error',
+        });
+      }
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
@@ -73,15 +103,39 @@ const FilterDrawer = () => {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>Filters</DrawerHeader>
+          <DrawerHeader>Select Filter</DrawerHeader>
 
           <DrawerBody>
-            <Select>
-              {displayAvailableLocationsOptions(availableLocations)}
+            <RadioGroup onChange={setCurrentFilter} value={currentFilter}>
+              <Stack direction="column">
+                <Radio value="departments">Departments</Radio>
+                <Radio value="locations">Locations</Radio>
+                <Radio value="titles">Titles</Radio>
+              </Stack>
+            </RadioGroup>
+            <Select
+              onChange={e => setFilterValue(e.target.value)}
+              onBlur={e => setFilterValue(e.target.value)}
+              isDisabled={currentFilter !== 'locations'}
+              placeholder="By Locations"
+            >
+              {displayLocationsFilterOptions(availableLocations)}
             </Select>
-            <Select>{displayAvailableTitlesOptions(availableTitles)}</Select>
-            <Select>
-              {displayAvailableDepartmentsOptions(availableDepartments)}
+            <Select
+              onChange={e => setFilterValue(e.target.value)}
+              onBlur={e => setFilterValue(e.target.value)}
+              isDisabled={currentFilter !== 'titles'}
+              placeholder="By Titles"
+            >
+              {displayTitlesFilterOptions(availableTitles)}
+            </Select>
+            <Select
+              onChange={e => setFilterValue(e.target.value)}
+              onBlur={e => setFilterValue(e.target.value)}
+              isDisabled={currentFilter !== 'departments'}
+              placeholder="By Departments"
+            >
+              {displayDepartmentsFilterOptions(availableDepartments)}
             </Select>
           </DrawerBody>
 
@@ -89,7 +143,9 @@ const FilterDrawer = () => {
             <Button variant="outline" mr={3} onClick={onClose}>
               Cancel
             </Button>
-            <Button colorScheme="blue">Save</Button>
+            <Button onClick={applyFilterAndSearch} colorScheme="blue">
+              Apply
+            </Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
