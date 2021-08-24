@@ -2,7 +2,7 @@
 
 This is my submission for the Postlight take home assignment for the Full Stack Engineer Position. In order to run this project in it's entirety, please clone and setup the backend repo and the server is running which can be found _[here](https://github.com/jtx007/postlight-employee-directory-api)_
 
-## Prerequisties
+## Prerequisites
 
 - Make sure that the backend api server is running which can be found _[here](https://github.com/jtx007/postlight-employee-directory-api)_
 
